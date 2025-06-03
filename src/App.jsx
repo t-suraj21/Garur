@@ -8,7 +8,6 @@ import Login from './pages/Login'
 import AdminPanel from './pages/AdminPanel'
 import VoiceControl from './components/VoiceControl'
 import './App.css'
-import Navbar from './components/Navbar'
 import Dashboard from './components/Dashboard'
 import Profile from './components/Profile'
 import Settings from './components/Settings'
@@ -37,13 +36,11 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <motion.main
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
+        <AnimatePresence mode="wait">
           <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/demo" element={<TestPage isDemo={true} />} />
             <Route
               path="/login"
               element={
@@ -56,8 +53,9 @@ function App() {
               }
             />
 
+            {/* Protected Routes */}
             <Route
-              path="/"
+              path="/dashboard"
               element={
                 <ProtectedRoute>
                   <Dashboard />
@@ -78,7 +76,7 @@ function App() {
               path="/tests"
               element={
                 <ProtectedRoute>
-                  <TestPage />
+                  <TestPage isDemo={false} />
                 </ProtectedRoute>
               }
             />
@@ -110,7 +108,7 @@ function App() {
               }
             />
           </Routes>
-        </motion.main>
+        </AnimatePresence>
         <VoiceControl />
       </div>
     </Router>

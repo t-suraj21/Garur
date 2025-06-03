@@ -1,91 +1,146 @@
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { speakText } from '../utils/voiceUtils';
+import Navbar from '../components/Navbar';
+import VoiceControl from '../components/VoiceControl';
 
 const Home = () => {
+  useEffect(() => {
+    // Welcome message when component mounts
+    speakText('Welcome to Garur, your voice-enabled learning platform');
+  }, []);
+
   const features = [
     {
-      title: 'Library',
-      description: 'Access your study materials and books',
-      icon: '📚',
-      path: '/library',
-      command: 'Go to library'
+      icon: '🎯',
+      title: 'Personalized Learning',
+      description: 'Adaptive tests and lessons tailored to your learning style'
     },
     {
-      title: 'Mock Tests',
-      description: 'Practice with voice-based tests',
-      icon: '✍️',
-      path: '/tests',
-      command: 'Start test'
+      icon: '🎤',
+      title: 'Voice Control',
+      description: 'Hands-free navigation and interaction throughout the platform'
+    },
+    {
+      icon: '📚',
+      title: 'Rich Content Library',
+      description: 'Access to a vast collection of educational materials'
+    },
+    {
+      icon: '📊',
+      title: 'Progress Tracking',
+      description: 'Monitor your learning journey with detailed analytics'
     }
   ];
 
-  const handleFeatureClick = (feature) => {
-    speakText(`Opening ${feature.title}. ${feature.description}`);
-  };
-
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="max-w-6xl mx-auto p-6"
-    >
-      <div className="text-center mb-12">
-        <motion.h1
-          initial={{ y: -20 }}
-          animate={{ y: 0 }}
-          className="text-4xl font-bold text-gray-800 mb-4"
-        >
-          Welcome to Garur
-        </motion.h1>
-        <motion.p
-          initial={{ y: -10 }}
-          animate={{ y: 0 }}
-          className="text-xl text-gray-600"
-        >
-          Your voice-controlled learning companion
-        </motion.p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+      <Navbar />
+      <VoiceControl />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {features.map((feature, index) => (
+      {/* Hero Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="pt-24 pb-16 px-4 sm:px-6 lg:px-8"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight"
+            >
+              Learn Smarter with
+              <span className="text-primary-500"> Voice</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="mt-6 text-xl text-gray-500 max-w-3xl mx-auto"
+            >
+              Experience the future of education with our voice-enabled learning platform.
+              Study, test, and track your progress—all with the power of your voice.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="mt-8 flex justify-center space-x-4"
+            >
+              <Link
+                to="/login"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-500 hover:bg-primary-600 transition-colors duration-300"
+              >
+                Get Started
+              </Link>
+              <Link
+                to="/demo"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary-600 bg-primary-50 hover:bg-primary-100 transition-colors duration-300"
+              >
+                Try Demo
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Features Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
           <motion.div
-            key={feature.title}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
+          >
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 + index * 0.1 }}
+                className="relative p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300"
+              >
+                <div className="text-4xl mb-4">{feature.icon}</div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-500">{feature.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ delay: 1.4 }}
+            className="bg-primary-500 rounded-2xl p-8 sm:p-12"
           >
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Ready to Transform Your Learning Experience?
+            </h2>
+            <p className="text-primary-50 text-lg mb-8 max-w-2xl mx-auto">
+              Join thousands of students who are already learning smarter with voice technology.
+            </p>
             <Link
-              to={feature.path}
-              onClick={() => handleFeatureClick(feature)}
-              className="block"
+              to="/login"
+              className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-600 bg-white hover:bg-gray-50 transition-colors duration-300"
             >
-              <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow">
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h2 className="text-2xl font-semibold mb-2">{feature.title}</h2>
-                <p className="text-gray-600">{feature.description}</p>
-                <p className="mt-4 text-sm text-primary-500">
-                  Voice command: "{feature.command}"
-                </p>
-              </div>
+              Start Learning Now
             </Link>
           </motion.div>
-        ))}
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-        className="mt-12 text-center"
-      >
-        <p className="text-gray-600">
-          Use voice commands to navigate and interact with the application.
-          <br />
-          Click the microphone icon in the bottom right to start.
-        </p>
-      </motion.div>
-    </motion.div>
+        </div>
+      </section>
+    </div>
   );
 };
 
